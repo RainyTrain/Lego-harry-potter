@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../UI/Button/Button';
 import { api } from '../Modules/API';
 import { addDetail } from '../Modules/Redux/Slice/FigSlice';
 

@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '../Modules/API';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, setMinifig } from '../Modules/Redux/Slice/FigSlice';
 import Figure from '../Components/Figure';
-import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
 
 const Minifig = () => {

@@ -1,6 +1,6 @@
 import Home from './Pages/Home.jsx';
 import './Styles/App.scss';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NotFound from './Pages/NotFound.jsx';
 import Minifig from './Pages/Minifig.jsx';
 import Order from './Pages/Order.jsx';
