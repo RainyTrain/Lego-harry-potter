@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   items: [],
   details: [],
-  minifig: ''
+  minifig: '',
+  isFormValid: false,
 };
 
 const figSlice = createSlice({
@@ -17,10 +18,13 @@ const figSlice = createSlice({
       state.details = [...state.details].concat(action.payload);
     },
     setMinifig(state, action) {
-        state.minifig = action.payload
-    }
+      state.minifig = action.payload;
+    },
+    setValid(state, action) {
+      state.isFormValid = action.payload;
+    },
   },
 });
 
-export const { addItem, addDetail,setMinifig } = figSlice.actions;
+export const { addItem, addDetail, setMinifig, setValid } = figSlice.actions;
 export default figSlice.reducer;

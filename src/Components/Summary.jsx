@@ -7,6 +7,7 @@ import { addDetail } from '../Modules/Redux/Slice/FigSlice';
 const Summary = () => {
   const minifig = useSelector((state) => state.figReducer.minifig);
   const details = useSelector((state) => state.figReducer.details);
+  const isValid = useSelector((state) => state.figReducer.isFormValid);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,7 +37,9 @@ const Summary = () => {
       <div className="summary__img">
         <img src={minifig.set_img_url}></img>
       </div>
-      <div className="summary__name"><span>{minifig.name}</span></div>
+      <div className="summary__name">
+        <span>{minifig.name}</span>
+      </div>
       <div className="summary__description">There are {minifig.num_parts} in this minifig</div>
       <div className="summary__details">
         {details.map((item) => {
@@ -49,7 +52,9 @@ const Summary = () => {
         })}
       </div>
       <div className="summary__button">
-        <Button>SUBMIT!</Button>
+        <button disabled={!isValid} type="submit">
+          SUBMIT!
+        </button>
       </div>
     </div>
   );

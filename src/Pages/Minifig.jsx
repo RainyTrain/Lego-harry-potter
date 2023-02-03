@@ -62,7 +62,7 @@ const Minifig = () => {
         })}
       </div>
       {active >= 0 ? (
-        <Link to="/order">
+        <Link style={{ textDecoration: 'none' }} to="/order">
           <button onClick={() => chooseMinifig(active)}>PROCEED TO SHIPMENT</button>
         </Link>
       ) : (
