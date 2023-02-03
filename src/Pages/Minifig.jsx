@@ -1,16 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { api } from '../Modules/API';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../Modules/Redux/Slice/FigSlice';
+import { addItem, setMinifig } from '../Modules/Redux/Slice/FigSlice';
 import Figure from '../Components/Figure';
+import Button from '../UI/Button/Button';
+import { Link } from 'react-router-dom';
 
 const Minifig = () => {
+  const [active, setActive] = useState(-1);
   const dispatch = useDispatch();
   const figures = useSelector((state) => state.figReducer.items);
+  const figure = useSelector((state) => state.figReducer.minifig);
 
-  const randomFigs = (response) => {
+  const handleClick = (id) => {
+    setActive(id);
+    console.log('hello');
+  };
+
+  const searchFigs = (response) => {
     const arr = new Array(3);
-    let i = 0
+    let i = 0;
     while (i < 3) {
       const index = Math.floor(Math.random() * response.data.results.length);
       const minifig = response.data.results[index];
@@ -18,7 +27,6 @@ const Minifig = () => {
         response.data.results.splice(index, 1);
         arr.push(minifig);
         i += 1;
-        console.log('Length', response.data.results.length);
         console.log(minifig);
       }
     }
@@ -29,7 +37,7 @@ const Minifig = () => {
     const getData = async () => {
       try {
         const responce = await api.get('/minifigs/?page_size=363&in_theme_id=246');
-        randomFigs(responce);
+        searchFigs(responce);
       } catch (error) {
         console.log(error);
       }
@@ -37,11 +45,29 @@ const Minifig = () => {
     getData();
   }, []);
 
+  const chooseMinifig = (id) => {
+    dispatch(setMinifig(figures[id]));
+    console.log('done');
+  };
+
+  useEffect(() => {
+    console.log('My figure is', figure);
+  });
+
   return (
     <div className="minifig">
-      {figures.map((item, id) => {
-        return <Figure key={id} {...item} />;
-      })}
+      <div className="minifig__items">
+        {figures.map((item, id) => {
+          return <Figure id={id} active={active} handleClick={handleClick} key={id} {...item} />;
+        })}
+      </div>
+      {active >= 0 ? (
+        <Link to="/order">
+          <button onClick={() => chooseMinifig(active)}>PROCEED TO SHIPMENT</button>
+        </Link>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
