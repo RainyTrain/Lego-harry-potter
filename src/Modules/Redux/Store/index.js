@@ -1,5 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
+import figReducer from '../Slice/FigSlice'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: { figReducer },
 });

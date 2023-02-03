@@ -1,0 +1,42 @@
+.figure {
+  width: 280px;
+  height: 280px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-right: 20px;
+  border-radius: 5%;
+  position: relative;
+  img {
+    width: 150px;
+    height: 160px;
+    margin-bottom: 10px;
+  }
+  &:hover {
+    box-shadow: 0 0 10px 10px rgb(244, 138, 17);
+  }
+  &__title {
+    display: flex;
+    justify-content: center;
+  }
+  &__name {
+    font-weight: 600;
+    font-size: 0.8em;
+    width: 70%;
+  }
+  &__detail {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 0.8em;
+    color: rgb(244, 138, 17);
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    span {
+      font-size: 1em;
+      font-weight: 800;
+      cursor: pointer;
+    }
+  }
+}

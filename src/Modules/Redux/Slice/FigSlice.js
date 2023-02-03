@@ -9,10 +9,10 @@ const figSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      action.payload.map((item) => state.items.push({ ...item }));
+      state.items = [...state.items].concat(action.payload);
     },
   },
 });
 
-export const {addItem} = figSlice.actions
-export default figSlice.reducer
+export const { addItem } = figSlice.actions;
+export default figSlice.reducer;
