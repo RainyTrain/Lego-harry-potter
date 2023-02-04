@@ -13,7 +13,6 @@ const Minifig = () => {
 
   const handleClick = (id) => {
     setActive(id);
-    console.log('hello');
   };
 
   const searchFigs = (response) => {
@@ -26,7 +25,6 @@ const Minifig = () => {
         response.data.results.splice(index, 1);
         arr.push(minifig);
         i += 1;
-        console.log(minifig);
       }
     }
     dispatch(addItem(arr));
@@ -46,12 +44,7 @@ const Minifig = () => {
 
   const chooseMinifig = (id) => {
     dispatch(setMinifig(figures[id]));
-    console.log('done');
   };
-
-  useEffect(() => {
-    console.log('My figure is', figure);
-  });
 
   return (
     <div className="minifig">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { setData } from '../Modules/Redux/Slice/DataSlice';
 import { setValid } from '../Modules/Redux/Slice/FigSlice';
 
 const Form = () => {
@@ -50,6 +51,19 @@ const Form = () => {
       dispatch(setValid(false));
     } else {
       dispatch(setValid(true));
+      dispatch(
+        setData({
+          name,
+          surname,
+          phone,
+          email,
+          date,
+          adress,
+          city,
+          state,
+          zip,
+        }),
+      );
     }
   }, [
     nameError,

@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { api } from '../Modules/API';
-import { addDetail } from '../Modules/Redux/Slice/FigSlice';
+import { clearData } from '../Modules/Redux/Slice/DataSlice';
+import { addDetail, clearCart } from '../Modules/Redux/Slice/FigSlice';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Summary = () => {
   const minifig = useSelector((state) => state.figReducer.minifig);
   const details = useSelector((state) => state.figReducer.details);
   const isValid = useSelector((state) => state.figReducer.isFormValid);
+  const data = useSelector((state) => state.dataReducer.data);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(minifig);
-  });
 
   const disptachData = (res) => {
     dispatch(addDetail(res));
@@ -22,13 +24,32 @@ const Summary = () => {
       try {
         const responce = await api.get(`minifigs/${set_num}/parts`);
         disptachData(responce.data.results);
-        console.log('my details', responce.data.results);
       } catch (error) {
         console.log(error);
       }
     };
     getDetails(minifig.set_num);
   }, []);
+
+  const submitOrder = async () => {
+    try {
+      await axios
+        .post('https://jsonplaceholder.typicode.com/posts', {
+          body: JSON.stringify({
+            userData: data,
+            minifig: minifig,
+            details: details,
+          }),
+        })
+        .then(() => {
+          dispatch(clearCart());
+          dispatch(clearData());
+          navigate('/response');
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="summary">
@@ -51,7 +72,7 @@ const Summary = () => {
         })}
       </div>
       <div className="summary__button">
-        <button disabled={!isValid} type="submit">
+        <button onClick={submitOrder} disabled={!isValid}>
           SUBMIT!
         </button>
       </div>

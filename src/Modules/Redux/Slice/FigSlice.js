@@ -23,8 +23,14 @@ const figSlice = createSlice({
     setValid(state, action) {
       state.isFormValid = action.payload;
     },
+    clearCart(state) {
+      state.items = [];
+      state.details = [];
+      state.minifig = '';
+      state.isFormValid = false;
+    },
   },
 });
 
-export const { addItem, addDetail, setMinifig, setValid } = figSlice.actions;
+export const { addItem, addDetail, setMinifig, setValid, clearCart } = figSlice.actions;
 export default figSlice.reducer;
