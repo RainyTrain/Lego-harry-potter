@@ -1,6 +1,11 @@
+import React, { ReactNode } from 'react';
 import './Button.scss';
 
-const Button = ({ children }) => {
+type ButtonPropsType = {
+  children?: ReactNode;
+};
+
+const Button: React.FC<ButtonPropsType> = ({ children }) => {
   return (
     <button className="button">
       <span className="button__title">{children}</span>

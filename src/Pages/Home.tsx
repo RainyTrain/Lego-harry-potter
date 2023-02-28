@@ -1,8 +1,8 @@
-import React from 'react';
 import Button from '../UI/Button/Button';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div className="home">
       <div className="home__logo">LEGO MINIFIGS MYSTERY</div>

@@ -23,6 +23,7 @@ const Summary = () => {
     const getDetails = async (set_num) => {
       try {
         const responce = await api.get(`minifigs/${set_num}/parts`);
+        console.log(responce.data.results)
         disptachData(responce.data.results);
       } catch (error) {
         console.log(error);
