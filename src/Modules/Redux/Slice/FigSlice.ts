@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IFigure {
+export interface IFigure {
   last_modified_dt: string;
   name: string;
   num_parts: number;
@@ -17,7 +17,7 @@ interface IDetail {
   is_spare: boolean;
   num_sets: number;
   part: any;
-  quantity: 1;
+  quantity: string;
   set_num: string;
 }
 

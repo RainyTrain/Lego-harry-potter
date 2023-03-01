@@ -9,7 +9,6 @@ const Minifig: React.FC = () => {
   const [active, setActive] = useState<number>(-1);
   const dispatch = useAppDispatch();
   const figures = useTypedSelector((state) => state.figReducer.items);
-  const figure = useTypedSelector((state) => state.figReducer.minifig);
 
   const handleClick = (id: number) => {
     setActive(id);
@@ -52,7 +51,7 @@ const Minifig: React.FC = () => {
   return (
     <div className="minifig">
       <div className="minifig__items">
-        {figures.map((item: any, id: number) => {
+        {figures.map((item, id: number) => {
           return <Figure id={id} active={active} handleClick={handleClick} key={id} {...item} />;
         })}
       </div>
