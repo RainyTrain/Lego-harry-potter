@@ -1,32 +1,34 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { api } from '../Modules/API';
-import { clearData } from '../Modules/Redux/Slice/DataSlice';
-import { addDetail, clearCart } from '../Modules/Redux/Slice/FigSlice';
+import { clearData, IInformation } from '../Modules/Redux/Slice/DataSlice';
+import { addDetail, clearCart, IDetail } from '../Modules/Redux/Slice/FigSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAppDispatch, useTypedSelector } from '../Hooks';
 
 const Summary = () => {
-  const minifig = useSelector((state) => state.figReducer.minifig);
-  const details = useSelector((state) => state.figReducer.details);
-  const isValid = useSelector((state) => state.figReducer.isFormValid);
-  const data = useSelector((state) => state.dataReducer.data);
+  const minifig = useTypedSelector((state) => state.figReducer.minifig);
+  const details = useTypedSelector((state) => state.figReducer.details);
+  const isValid = useTypedSelector((state) => state.figReducer.isFormValid);
+  const data = useTypedSelector((state) => state.dataReducer.data);
+
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const disptachData = (res) => {
+  const disptachData = (res: IDetail[]) => {
     dispatch(addDetail(res));
   };
 
   useEffect(() => {
-    const getDetails = async (set_num) => {
+    const getDetails = async (set_num: string) => {
       try {
         const responce = await api.get(`minifigs/${set_num}/parts`);
-        console.log(responce.data.results)
         disptachData(responce.data.results);
       } catch (error) {
-        console.log(error);
+        let message = 'Unknown Error';
+        if (error instanceof Error) message = error.message;
+        console.log(message);
       }
     };
     getDetails(minifig.set_num);
@@ -48,7 +50,9 @@ const Summary = () => {
           navigate('/response');
         });
     } catch (error) {
-      console.log(error);
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
+      console.log(message);
     }
   };
 

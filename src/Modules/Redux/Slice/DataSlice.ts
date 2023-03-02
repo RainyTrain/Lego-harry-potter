@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface IInformation {
+export interface IInformation {
   name: string;
   surname: string;
   phone: string;
@@ -16,7 +16,7 @@ interface IData {
   data: IInformation;
 }
 
-const initialState = {
+const initialState: IData = {
   data: {
     name: '',
     surname: '',

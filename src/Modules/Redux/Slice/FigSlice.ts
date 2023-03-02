@@ -9,7 +9,7 @@ export interface IFigure {
   set_url: string;
 }
 
-interface IDetail {
+export interface IDetail {
   color: any;
   element_id: string;
   id: number;

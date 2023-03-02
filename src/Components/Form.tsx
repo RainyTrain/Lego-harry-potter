@@ -1,40 +1,41 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../Hooks';
 import { setData } from '../Modules/Redux/Slice/DataSlice';
 import { setValid } from '../Modules/Redux/Slice/FigSlice';
 
 const Form = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [date, setDate] = useState('');
-  const [adress, setAdress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
+  const [name, setName] = useState<string>('');
+  const [surname, setSurname] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [adress, setAdress] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [state, setState] = useState<string>('');
+  const [zip, setZip] = useState<string>('');
 
-  const [nameDirty, setNameDirty] = useState(false);
-  const [surnameDirty, setSurnameDirty] = useState(false);
-  const [phoneDirty, setPhoneDirty] = useState(false);
-  const [emailDirty, setEmailDirty] = useState(false);
-  const [dateDirty, setDateDirty] = useState(false);
-  const [adressDirty, setAdressDirty] = useState(false);
-  const [cityDirty, setCityDirty] = useState(false);
-  const [stateDirty, setStateDirty] = useState(false);
-  const [zipDirty, setZipDirty] = useState(false);
+  const [nameDirty, setNameDirty] = useState<boolean>(false);
+  const [surnameDirty, setSurnameDirty] = useState<boolean>(false);
+  const [phoneDirty, setPhoneDirty] = useState<boolean>(false);
+  const [emailDirty, setEmailDirty] = useState<boolean>(false);
+  const [dateDirty, setDateDirty] = useState<boolean>(false);
+  const [adressDirty, setAdressDirty] = useState<boolean>(false);
+  const [cityDirty, setCityDirty] = useState<boolean>(false);
+  const [stateDirty, setStateDirty] = useState<boolean>(false);
+  const [zipDirty, setZipDirty] = useState<boolean>(false);
 
-  const [nameError, setNameError] = useState('This field could not be empty!');
-  const [surnameError, setSurnameError] = useState('This field could not be empty!');
-  const [phoneEror, setPhoneEror] = useState('This field could not be empty!');
-  const [emailError, setEmailError] = useState('This field could not be empty!');
-  const [dateError, setDateError] = useState('This field could not be empty!');
-  const [adressError, setAdressError] = useState('This field could not be empty!');
-  const [cityError, setCityError] = useState('This field could not be empty!');
-  const [stateError, setStateError] = useState('');
-  const [zipError, setZipError] = useState('This field could not be empty!');
+  const [nameError, setNameError] = useState<string>('This field could not be empty!');
+  const [surnameError, setSurnameError] = useState<string>('This field could not be empty!');
+  const [phoneEror, setPhoneEror] = useState<string>('This field could not be empty!');
+  const [emailError, setEmailError] = useState<string>('This field could not be empty!');
+  const [dateError, setDateError] = useState<string>('This field could not be empty!');
+  const [adressError, setAdressError] = useState<string>('This field could not be empty!');
+  const [cityError, setCityError] = useState<string>('This field could not be empty!');
+  const [stateError, setStateError] = useState<string>('This field could not be empty!');
+  const [zipError, setZipError] = useState<string>('This field could not be empty!');
 
   useEffect(() => {
     if (
@@ -77,7 +78,7 @@ const Form = () => {
     zipError,
   ]);
 
-  const blurHander = (e) => {
+  const blurHander = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
     switch (e.target.name) {
       case 'name':
         setNameDirty(true);
@@ -111,90 +112,85 @@ const Form = () => {
     }
   };
 
-  const nameHandler = (e) => {
-    setName(e.target.value);
-    if (e.target.value.length < 3 || e.target.value.length > 11) {
+  const nameHandler = (arg: string) => {
+    setName(arg);
+    if (arg.length < 3 || arg.length > 11) {
       setNameError('Too long or too short name');
     } else {
       setNameError('');
     }
   };
 
-  const surnameHandler = (e) => {
-    setSurname(e.target.value);
-    if (e.target.value.length < 3 || e.target.value.length > 11) {
+  const surnameHandler = (arg: string) => {
+    setSurname(arg);
+    if (arg.length < 3 || arg.length > 11) {
       setSurnameError('Too long or too short surname');
     } else {
       setSurnameError('');
     }
   };
 
-  const phoneHandler = (e) => {
-    setPhone(e.target.value);
+  const phoneHandler = (arg: string) => {
+    setPhone(arg);
     const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-    if (!re.test(e.target.value)) {
+    if (!re.test(arg)) {
       setPhoneEror('Invalid phone format - (123)123-1234');
     } else {
       setPhoneEror('');
     }
   };
 
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
+  const emailHandler = (arg: string) => {
+    setEmail(arg);
     const re =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!re.test(e.target.value)) {
+    if (!re.test(arg)) {
       setEmailError('Invalid email format - example@server.com');
     } else {
       setEmailError('');
     }
   };
 
-  const dateHandler = (e) => {
-    setDate(e.target.value);
+  const dateHandler = (arg: string) => {
+    setDate(arg);
     const date = new Date();
     const currentYear = date.getFullYear();
     const re = /^(?:0[1-9]|1[012])([/])(?:0[1-9]|[12]\d|3[01])\1(?:19|20)\d\d$/;
-    if (!re.test(e.target.value)) {
+    if (!re.test(arg)) {
       setDateError('Invalid date format - mm/dd/yyyy');
-    } else if (e.target.value.slice(6, 10) >= currentYear - 18) {
+    } else if (Number(arg.slice(6, 10)) >= currentYear - 18) {
       setDateError('Your have to be over 18!');
     } else {
       setDateError('');
     }
   };
 
-  const cityHandler = (e) => {
-    setCity(e.target.value);
-    if (e.target.value.length < 3 || e.target.value.length > 50) {
+  const cityHandler = (arg: string) => {
+    setCity(arg);
+    if (arg.length < 3 || arg.length > 50) {
       setCityError('Too long or too short city');
     } else {
       setCityError('');
     }
   };
 
-  const stateHandler = (e) => {
-    setState(e.target.value);
-    if (!e.target.value) {
-      setCityError('Too long or too short city');
-    } else {
-      setCityError('');
-    }
+  const stateHandler = (arg: string) => {
+    setState(arg);
   };
 
-  const adressHandler = (e) => {
-    setAdress(e.target.value);
-    if (e.target.value.length < 3 || e.target.value.length > 50) {
+  const adressHandler = (arg: string) => {
+    setAdress(arg);
+    if (arg.length < 3 || arg.length > 50) {
       setAdressError('Too long or too short city');
     } else {
       setAdressError('');
     }
   };
 
-  const zipHandler = (e) => {
-    setZip(e.target.value);
+  const zipHandler = (arg: string) => {
+    setZip(arg);
     const re = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-    if (!re.test(e.target.value)) {
+    if (!re.test(arg)) {
       setZipError('Incorrect zip format 12345');
     } else {
       setZipError('');
@@ -212,7 +208,7 @@ const Form = () => {
           )}
           <input
             value={name}
-            onChange={(e) => nameHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => nameHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="name"
             type="text"
@@ -225,7 +221,7 @@ const Form = () => {
           )}
           <input
             value={surname}
-            onChange={(e) => surnameHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => surnameHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="surname"
             type="text"
@@ -238,7 +234,7 @@ const Form = () => {
           )}
           <input
             value={phone}
-            onChange={(e) => phoneHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => phoneHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="phone"
             type="tel"
@@ -251,7 +247,7 @@ const Form = () => {
           )}
           <input
             value={email}
-            onChange={(e) => emailHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => emailHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="email"
             type="email"
@@ -264,7 +260,7 @@ const Form = () => {
           )}
           <input
             value={date}
-            onChange={(e) => dateHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => dateHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="date"
             type="text"
@@ -277,7 +273,7 @@ const Form = () => {
           )}
           <input
             value={adress}
-            onChange={(e) => adressHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => adressHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="adress"
             type="text"
@@ -290,7 +286,7 @@ const Form = () => {
           )}
           <input
             value={city}
-            onChange={(e) => cityHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => cityHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="city"
             type="text"
@@ -301,7 +297,10 @@ const Form = () => {
           {stateDirty && stateError && (
             <div style={{ color: 'red', marginBottom: '5px' }}>{stateError}</div>
           )}
-          <select onChange={(e) => stateHandler(e)} value={state} onBlur={(e) => blurHander(e)}>
+          <select
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => stateHandler(e.target.value)}
+            value={state}
+            onBlur={(e) => blurHander(e)}>
             <option value="Alabama">Alabama (AL)</option>
             <option value="Alaska">Alaska (AK)</option>
             <option value="Arizona">Arizona (AZ)</option>
@@ -362,7 +361,7 @@ const Form = () => {
           )}
           <input
             value={zip}
-            onChange={(e) => zipHandler(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => zipHandler(e.target.value)}
             onBlur={(e) => blurHander(e)}
             name="zip"
             type="text"
