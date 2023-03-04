@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { api } from '../Modules/API';
-import { clearData, IInformation } from '../Modules/Redux/Slice/DataSlice';
+import { clearData } from '../Modules/Redux/Slice/DataSlice';
 import { addDetail, clearCart, IDetail } from '../Modules/Redux/Slice/FigSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';

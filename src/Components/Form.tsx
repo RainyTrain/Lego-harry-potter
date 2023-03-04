@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../Hooks';
 import { setData } from '../Modules/Redux/Slice/DataSlice';
 import { setValid } from '../Modules/Redux/Slice/FigSlice';
 
-const Form = () => {
+const Form = React.memo(() => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState<string>('');
@@ -34,10 +33,18 @@ const Form = () => {
   const [dateError, setDateError] = useState<string>('This field could not be empty!');
   const [adressError, setAdressError] = useState<string>('This field could not be empty!');
   const [cityError, setCityError] = useState<string>('This field could not be empty!');
-  const [stateError, setStateError] = useState<string>('This field could not be empty!');
+  const [stateError, setStateError] = useState<string>('');
   const [zipError, setZipError] = useState<string>('This field could not be empty!');
 
   useEffect(() => {
+    console.log(nameError,
+      surnameError,
+      phoneEror,
+      emailError,
+      dateError,
+      adressError,
+      cityError,
+      stateError,zipError);
     if (
       nameError ||
       surnameError ||
@@ -200,7 +207,7 @@ const Form = () => {
   return (
     <div className="container">
       <h1>SHIPPING DETAILS</h1>
-      <form>
+      <form onSubmit={(e: FormEvent<HTMLFormElement>) => e.preventDefault}>
         <label htmlFor="name" className="short">
           <h2>Name</h2>
           {nameDirty && nameError && (
@@ -370,6 +377,6 @@ const Form = () => {
       </form>
     </div>
   );
-};
+});
 
 export default Form;

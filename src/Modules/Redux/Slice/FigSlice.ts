@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { api } from '../../API';
 
 export interface IFigure {
   last_modified_dt: string;
@@ -26,6 +27,7 @@ interface IInitialState {
   details: IDetail[];
   minifig: IFigure;
   isFormValid: false | true;
+  test: any[];
 }
 
 const initialState: IInitialState = {
@@ -40,7 +42,29 @@ const initialState: IInitialState = {
     set_url: '',
   },
   isFormValid: false,
+  test: [],
 };
+
+// const searchFigs = (response: IFigure[]) => {
+//   const arr = new Array<IFigure>(3);
+//   let i = 0;
+//   while (i < 3) {
+//     const index = Math.floor(Math.random() * response.length);
+//     const minifig = response[index];
+//     if (minifig.set_img_url) {
+//       response.splice(index, 1);
+//       arr.push(minifig);
+//       i += 1;
+//     }
+//   }
+//   return arr;
+// };
+
+export const testData = createAsyncThunk('minifig/getItem', async () => {
+  const response = await api.get('/minifigs/?page_size=363&in_theme_id=246');
+  console.log('log');
+  return response.data.results;
+});
 
 const figSlice = createSlice({
   name: 'minifig',
@@ -64,6 +88,18 @@ const figSlice = createSlice({
       state.minifig = initialState.minifig;
       state.isFormValid = initialState.isFormValid;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(testData.pending, (state) => {
+      console.log('test');
+    });
+    builder.addCase(testData.fulfilled, (state, action) => {
+      state.test = action.payload;
+    });
+    builder.addCase(testData.rejected, (state, action) => {
+      
+      console.log('hiy')
+    });
   },
 });
 
