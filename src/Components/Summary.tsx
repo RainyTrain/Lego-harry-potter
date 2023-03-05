@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { api } from '../Modules/API';
 import { clearData } from '../Modules/Redux/Slice/DataSlice';
-import { addDetail, clearCart, IDetail } from '../Modules/Redux/Slice/FigSlice';
+import { clearCart, getDetails } from '../Modules/Redux/Slice/FigSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch, useTypedSelector } from '../Hooks';
@@ -16,22 +15,8 @@ const Summary = () => {
 
   const dispatch = useAppDispatch();
 
-  const disptachData = (res: IDetail[]) => {
-    dispatch(addDetail(res));
-  };
-
   useEffect(() => {
-    const getDetails = async (set_num: string) => {
-      try {
-        const responce = await api.get(`minifigs/${set_num}/parts`);
-        disptachData(responce.data.results);
-      } catch (error) {
-        let message = 'Unknown Error';
-        if (error instanceof Error) message = error.message;
-        console.log(message);
-      }
-    };
-    getDetails(minifig.set_num);
+    dispatch(getDetails(minifig.set_num));
   }, []);
 
   const submitOrder = async () => {

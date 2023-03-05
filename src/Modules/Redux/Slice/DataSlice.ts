@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { api } from '../../API';
+import {  createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IInformation {
   name: string;
