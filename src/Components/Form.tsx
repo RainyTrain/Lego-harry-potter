@@ -37,14 +37,6 @@ const Form = React.memo(() => {
   const [zipError, setZipError] = useState<string>('This field could not be empty!');
 
   useEffect(() => {
-    console.log(nameError,
-      surnameError,
-      phoneEror,
-      emailError,
-      dateError,
-      adressError,
-      cityError,
-      stateError,zipError);
     if (
       nameError ||
       surnameError ||

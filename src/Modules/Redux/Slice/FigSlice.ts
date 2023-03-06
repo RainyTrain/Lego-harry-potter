@@ -68,7 +68,7 @@ export const getData = createAsyncThunk('minifig/getItems', async () => {
 
 export const getDetails = createAsyncThunk('minifig/getDetails', async (set_num: string) => {
   const response = await api.get(`minifigs/${set_num}/parts`);
-  return response.data.results
+  return response.data.results;
 });
 
 const figSlice = createSlice({
@@ -78,9 +78,6 @@ const figSlice = createSlice({
     addItem(state, action: PayloadAction<IFigure[]>) {
       state.items = [...state.items].concat(action.payload);
     },
-    // addDetail(state, action: PayloadAction<IDetail[]>) {
-    //   state.details = [...state.details].concat(action.payload);
-    // },
     setMinifig(state, action: PayloadAction<IFigure>) {
       state.minifig = action.payload;
     },
@@ -99,8 +96,8 @@ const figSlice = createSlice({
       state.items = action.payload;
     });
     builder.addCase(getDetails.fulfilled, (state, action) => {
-      state.details = action.payload
-    })
+      state.details = action.payload;
+    });
   },
 });
 
