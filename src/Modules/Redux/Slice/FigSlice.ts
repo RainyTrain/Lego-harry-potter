@@ -41,7 +41,7 @@ const initialState: IInitialState = {
     set_num: '',
     set_url: '',
   },
-  isFormValid: false,
+  isFormValid: true,
   test: [],
 };
 
