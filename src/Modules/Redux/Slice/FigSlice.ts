@@ -27,7 +27,6 @@ interface IInitialState {
   details: IDetail[];
   minifig: IFigure;
   isFormValid: false | true;
-  test: any[];
 }
 
 const initialState: IInitialState = {
@@ -41,8 +40,7 @@ const initialState: IInitialState = {
     set_num: '',
     set_url: '',
   },
-  isFormValid: true,
-  test: [],
+  isFormValid: false,
 };
 
 const searchFigs = (response: IFigure[]) => {
