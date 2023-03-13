@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { FormEvent, useEffect } from 'react';
 import { useAppDispatch } from '../Hooks';
+import { setData } from '../Modules/Redux/Slice/DataSlice';
 import { setValid } from '../Modules/Redux/Slice/FigSlice';
 
 const validate = (values: any) => {
@@ -91,6 +92,7 @@ const ShipingForm = () => {
   useEffect(() => {
     if (formik.isValid && Object.keys(formik.touched).length > 0) {
       dispatch(setValid(true));
+      dispatch(setData(formik.values))
     }
   }, [formik.errors]);
 
@@ -100,7 +102,7 @@ const ShipingForm = () => {
       <form
         onSubmit={(event: FormEvent<HTMLFormElement>) => {
           event.preventDefault();
-          formik.handleSubmit();
+          formik.handleSubmit()
         }}>
         <label htmlFor="name" className="short">
           <h2>Name</h2>

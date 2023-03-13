@@ -14,7 +14,7 @@ const Minifig: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getData())
+    dispatch(getData());
   }, []);
 
   const chooseMinifig = (id: number) => {
