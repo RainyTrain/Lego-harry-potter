@@ -3,69 +3,7 @@ import { FormEvent, useEffect } from 'react';
 import { useAppDispatch } from '../Hooks';
 import { setData } from '../Modules/Redux/Slice/DataSlice';
 import { setValid } from '../Modules/Redux/Slice/FigSlice';
-
-const validate = (values: any) => {
-  const errors: any = {};
-
-  if (!values.name) {
-    errors.name = 'Required';
-  } else if (values.name.length < 3 || values.name.length > 11) {
-    errors.name = 'Too long or too short name';
-  }
-
-  if (!values.surname) {
-    errors.surname = 'Required';
-  } else if (values.name.length < 3 || values.name.length > 11) {
-    errors.surname = 'Too long or too short surname';
-  }
-
-  if (!values.phone) {
-    errors.phone = 'Required';
-  } else if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(values.phone)) {
-    errors.phone = 'Invalid phone format - (123)123-1234';
-  }
-
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (
-    !/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(
-      values.email,
-    )
-  ) {
-    errors.email = 'Invalid email format - example@server.com';
-  }
-
-  const date = new Date();
-  const currentYear = date.getFullYear();
-
-  if (!values.date) {
-    errors.date = 'Required';
-  } else if (!/^(?:0[1-9]|1[012])([/])(?:0[1-9]|[12]\d|3[01])\1(?:19|20)\d\d$/.test(values.date)) {
-    errors.date = 'Invalid date format - mm/dd/yyyy';
-  } else if (Number(values.date.slice(6, 10)) >= currentYear - 18) {
-    errors.date = 'You have to be over 18!';
-  }
-
-  if (!values.adress) {
-    errors.adress = 'Required';
-  } else if (values.adress.length < 3 || values.adress.length > 50) {
-    errors.adress = 'Too long or too short adress';
-  }
-
-  if (!values.city) {
-    errors.city = 'Required';
-  } else if (values.city.length < 3 || values.city.length > 50) {
-    errors.city = 'Too long or too short city';
-  }
-
-  if (!values.zip) {
-    errors.zip = 'Required';
-  } else if (!/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(values.zip)) {
-    errors.zip = 'Incorrect zip format 12345';
-  }
-  
-  return errors;
-};
+import * as Yup from 'yup';
 
 const ShipingForm = () => {
   const dispatch = useAppDispatch();
@@ -83,7 +21,38 @@ const ShipingForm = () => {
       zip: '',
     },
     validateOnMount: true,
-    validate: validate,
+    validationSchema: Yup.object({
+      name: Yup.string().min(4, 'Too short name').max(10, 'Too long name').required('Required'),
+      surname: Yup.string()
+        .min(4, 'Too short surname')
+        .max(10, 'Too long surname')
+        .required('Required'),
+      phone: Yup.string()
+        .matches(
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+          'Invalid phone format - (123)123-1234',
+        )
+        .required('Required'),
+      email: Yup.string()
+        .matches(
+          /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+          'Invalid email format - example@server.com',
+        )
+        .required('Required'),
+      date: Yup.date()
+        .max(new Date().getFullYear() - 18, 'You have to be over 18!')
+        .min(new Date().getFullYear() - 100, 'You are too old ;)!')
+        .required('Required'),
+      adress: Yup.string()
+        .min(3, 'Too short adress')
+        .max(50, 'Too long adress')
+        .required('Required'),
+      city: Yup.string().min(3, 'Too short city').max(20, 'Too long city').required('Required'),
+      state: Yup.string().required('Required'),
+      zip: Yup.string()
+        .matches(/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Incorrect zip format 12345')
+        .required('Required'),
+    }),
     onSubmit: (values) => {
       console.log(values);
     },
@@ -92,7 +61,7 @@ const ShipingForm = () => {
   useEffect(() => {
     if (formik.isValid && Object.keys(formik.touched).length > 0) {
       dispatch(setValid(true));
-      dispatch(setData(formik.values))
+      dispatch(setData(formik.values));
     }
   }, [formik.errors]);
 
@@ -102,7 +71,7 @@ const ShipingForm = () => {
       <form
         onSubmit={(event: FormEvent<HTMLFormElement>) => {
           event.preventDefault();
-          formik.handleSubmit()
+          formik.handleSubmit();
         }}>
         <label htmlFor="name" className="short">
           <h2>Name</h2>

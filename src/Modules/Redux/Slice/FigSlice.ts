@@ -66,6 +66,7 @@ export const getData = createAsyncThunk('minifig/getItems', async () => {
 
 export const getDetails = createAsyncThunk('minifig/getDetails', async (set_num: string) => {
   const response = await api.get(`minifigs/${set_num}/parts`);
+  console.log(response,'hello')
   return response.data.results;
 });
 
