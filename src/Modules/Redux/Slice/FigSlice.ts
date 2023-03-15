@@ -58,17 +58,20 @@ const searchFigs = (response: IFigure[]) => {
   return arr;
 };
 
-export const getData = createAsyncThunk('minifig/getItems', async () => {
+export const getData = createAsyncThunk<IFigure[]>('minifig/getItems', async () => {
   const response = await api.get('/minifigs/?page_size=363&in_theme_id=246');
   const data = searchFigs(response.data.results);
   return data;
 });
 
-export const getDetails = createAsyncThunk('minifig/getDetails', async (set_num: string) => {
-  const response = await api.get(`minifigs/${set_num}/parts`);
-  console.log(response,'hello')
-  return response.data.results;
-});
+export const getDetails = createAsyncThunk<IDetail[], string>(
+  'minifig/getDetails',
+  async (set_num) => {
+    const response = await api.get(`/minifigs/${set_num}/parts`);
+    const data: IDetail[] = response.data.results;
+    return data;
+  },
+);
 
 const figSlice = createSlice({
   name: 'minifig',
