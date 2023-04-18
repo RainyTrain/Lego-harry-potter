@@ -2,6 +2,16 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## General info
+Web application that allows users to draw three different LEGO mini figures. The first step contains a button that initiates the drawing. After successfully drawing three random minifigs, the user can choose one of the three random figures on the next screen. The last step contains the summary and shipping details form.
+
+## Technologies
+Project is created with:
+* React.js
+* TypeScript
+* Redux Toolkit
+* REST API
+
 ## Available Scripts
 
 In the project directory, you can run:
